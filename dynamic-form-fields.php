@@ -21,6 +21,18 @@ function dynamic_form_fields_scripts() {
 }
 add_action('wp_enqueue_scripts', 'dynamic_form_fields_scripts');
 
+function my_plugin_enqueue_bootstrap() {
+    wp_enqueue_style('my-plugin-bootstrap-css', plugins_url('/assets/bootstrap-5.3/css/bootstrap.min.css', __FILE__));
+    wp_enqueue_script('my-plugin-bootstrap-js', plugins_url('/assets/bootstrap-5.3/js/bootstrap.min.js', __FILE__), array('jquery'), '5.0.0', true);
+}
+add_action('wp_enqueue_scripts', 'my_plugin_enqueue_bootstrap');
+
+function my_plugin_admin_enqueue_bootstrap() {
+    wp_enqueue_style('my-plugin-bootstrap-admin-css', plugins_url('/assets/bootstrap-5.3/css/bootstrap.min.css', __FILE__));
+    wp_enqueue_script('my-plugin-bootstrap-admin-js', plugins_url('/assets/bootstrap-5.3/css/bootstrap.min.css', __FILE__), array('jquery'), '5.0.0', true);
+}
+add_action('admin_enqueue_scripts', 'my_plugin_admin_enqueue_bootstrap');
+
 
 function get_rooms_data() {
     global $wpdb;
@@ -93,22 +105,26 @@ function display_room_selection_form() {
     ob_start();
 
     // Generate the form
-    echo '<form method="post" action="">';
-    echo '<div id="roomFormContainer">'; // Container for the initial form elements
+    echo '<form method="post" action="" class="needs-validation" novalidate>'; // Added Bootstrap validation class
+    echo '<div id="roomFormContainer" class="container mt-5">'; // Added Bootstrap container and margin-top classes
 
     // Initial form elements
-    echo '<select name="room_number[]">'; // Notice the square brackets for multiple selections
+    echo '<select name="room_number[]" class="form-select mb-3">'; // Added Bootstrap select class and margin-bottom
     echo '<option value="" disabled selected>Select Room Type</option>';
     echo '<option value="Single Bed">Single Bed</option>';
     echo '<option value="Double Bed">Double Bed</option>';
     echo '<option value="Hall">Hall</option>';
     echo '</select>';
-    // echo '<label for="room_number_input">Enter Number of Rooms:</label>';
-    echo '<input type="number" placeholder="Enter Number of Rooms" id="room_number_input" name="room_number_input[]" min="1" max="100" required>';
-    echo '<button type="button" class="js-add-another-type">Add Another Type</button>'; // Clone button
+
+    echo '<div class="mb-3">'; // Wrapper for input number and label
+        echo '<label for="room_number_input" class="form-label">Enter Number of Rooms</label>'; // Added Bootstrap label class
+        echo '<input type="number" class="form-control" id="room_number_input" name="room_number_input[]" min="1" max="100" required>'; // Added Bootstrap input class
+    echo '</div>';
+
+    echo '<button type="button" class="btn btn-primary js-add-another-type">Add Another Type</button>'; // Added Bootstrap button class
 
     echo '</div>'; // Close container
-    echo '<input type="submit" value="Submit All">'; // Submit button for all forms
+    echo '<input type="submit" value="Submit All" class="btn btn-success mt-3" style="width:auto;">'; // Added Bootstrap submit button class and style
 
     // Get the captured HTML output
     $output = ob_get_clean();
