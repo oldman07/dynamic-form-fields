@@ -3,6 +3,7 @@
 //     alert('Script is loaded!');
 // });
 
+
 jQuery(document).ready(function($) {
     // Initialize counter for new fields
     var count = 1;
@@ -11,10 +12,10 @@ jQuery(document).ready(function($) {
     $('.js-add-another-type').click(function(e) {
         e.preventDefault(); // Prevent the default action
 
-        // Create new select and input elements
-        var newSelect = $('<select>', {name: 'room_number[]'});
+        // Create new select and input elements with Bootstrap classes
+        var newSelect = $('<select > ', {name: 'room_number[]', class: 'cake'});
         var newOption = $('<option>', {value: "", text: "Select Room Type", disabled: true, selected: true});
-        var newInput = $('<input>', {type: "number", id: "room_number_input_" + count, name: "room_number_input[]", min: "1", max: "100", required: true});
+        var newInput = $('<input>', {type: "number",  class: 'form-select mb-3 ', id: "room_number_input_" + count, name: "room_number_input[]", min: "1", max: "100", required: true});
 
         // Append options to the new select
         newSelect.append(newOption);
@@ -23,13 +24,42 @@ jQuery(document).ready(function($) {
         newSelect.append($('<option>', {value: "Hall", text: "Hall"}));
 
         // Wrap the new elements in a div and prepend them to the form container
-        var newRow = $('<div>').append(newSelect, newInput);
+        var newRow = $('<div>', {id: 'dynamic-row-' + count, class: 'custom-class'}).append(newSelect, newInput); // Assigning ID and class to the new row
         $('#roomFormContainer').prepend(newRow);
 
         // Increment the counter for the next addition
         count++;
     });
 });
+
+
+// jQuery(document).ready(function($) {
+//     // Initialize counter for new fields
+//     var count = 1;
+
+//     // Add event listener to the clone button
+//     $('.js-add-another-type').click(function(e) {
+//         e.preventDefault(); // Prevent the default action
+
+//         // Create new select and input elements with Bootstrap classes
+//         var newSelect = $('<select> class="mb-3"', {name: 'room_number[]', class: 'form-select mb-3'});
+//         var newOption = $('<option>', {value: "", text: "Select Room Type", disabled: true, selected: true});
+//         var newInput = $('<input>', {type: "number", id: "room_number_input_" + count, name: "room_number_input[]", min: "1", max: "100", required: true, class: 'form-control'});
+
+//         // Append options to the new select
+//         newSelect.append(newOption);
+//         newSelect.append($('<option>', {value: "Single Bed", text: "Single Bed"}));
+//         newSelect.append($('<option>', {value: "Double Bed", text: "Double Bed"}));
+//         newSelect.append($('<option>', {value: "Hall", text: "Hall"}));
+
+//         // Wrap the new elements in a div and prepend them to the form container
+//         var newRow = $('<div>', {class: 'mb-3'}).append(newSelect, newInput); // Added Bootstrap class for margin-bottom
+//         $('#roomFormContainer').prepend(newRow);
+
+//         // Increment the counter for the next addition
+//         count++;
+//     });
+// });
 
 
 

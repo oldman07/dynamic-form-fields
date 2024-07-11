@@ -109,7 +109,7 @@ function display_room_selection_form() {
     echo '<div id="roomFormContainer" class="container mt-5">'; // Added Bootstrap container and margin-top classes
 
     // Initial form elements
-    echo '<select name="room_number[]" class="form-select mb-3">'; // Added Bootstrap select class and margin-bottom
+    echo '<select name="room_number[]" class="form-select mb-3 mt-3">'; // Added Bootstrap select class and margin-bottom
     echo '<option value="" disabled selected>Select Room Type</option>';
     echo '<option value="Single Bed">Single Bed</option>';
     echo '<option value="Double Bed">Double Bed</option>';
@@ -117,8 +117,8 @@ function display_room_selection_form() {
     echo '</select>';
 
     echo '<div class="mb-3">'; // Wrapper for input number and label
-        echo '<label for="room_number_input" class="form-label">Enter Number of Rooms</label>'; // Added Bootstrap label class
-        echo '<input type="number" class="form-control" id="room_number_input" name="room_number_input[]" min="1" max="100" required>'; // Added Bootstrap input class
+      
+        echo '<input type="number" placeholder="Enter Number of Rooms" class="form-control" id="room_number_input" name="room_number_input[]" min="1" max="100" required>'; // Added Bootstrap input class
     echo '</div>';
 
     echo '<button type="button" class="btn btn-primary js-add-another-type">Add Another Type</button>'; // Added Bootstrap button class
