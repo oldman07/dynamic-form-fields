@@ -7,17 +7,26 @@ Author: Your Name
 */
 
 function dynamic_form_fields_scripts() {
-    // Register the script
+    // Register the main script
     wp_register_script(
         'dynamic-form-fields-script',
         plugins_url('/assets/js/script.js', __FILE__),
         array('jquery'), // Dependencies
         '1.0.0', // Version number
-        true // In footer
+        true // Load in footer
+    );
+
+    // Register the style
+    wp_register_style(
+        'dynamic-form-fields-style',
+        plugins_url('/assets/css/style.css', __FILE__)
     );
 
     // Enqueue the script
     wp_enqueue_script('dynamic-form-fields-script');
+
+    // Enqueue the style
+    wp_enqueue_style('dynamic-form-fields-style');
 }
 add_action('wp_enqueue_scripts', 'dynamic_form_fields_scripts');
 
@@ -64,21 +73,24 @@ function display_rooms_data_shortcode() {
                     $result = $roomJsonValue * $enteredNumber;
                     $totalResult += $result; // Add individual result to total
 
-                    echo '<div class="room">';
-                    echo '<h2>Item ' . ($index + 1) . ': ' . esc_html($room->room_json) . '</h2>';
-                    echo '<p>Total: ' . esc_html($result) . '</p>';
-                    
+                    // Updated HTML with Bootstrap classes
+                    echo '<div class="card mb-3">'; // Card for each room data
+                        echo '<div class="card-body">';
+                            echo '<h5 class="card-title">Room ' . ($index + 1) . '</h5>';
+                            echo '<p class="card-text">Single price: ' . esc_html($room->room_json) . '</p>';
+                            echo '<p class="card-text">Total price: ' . esc_html($result) . '</p>';
+                        echo '</div>';
                     echo '</div>';
                 }
             }
-            echo '<p><strong>Total for all items: ' . esc_html($totalResult) . '</strong></p>';
-            echo '<a href="' . esc_url_raw(add_query_arg('action', 'go_back')) . '">Go Back</a>';
+            echo '<div class="mt-3"><p><strong>Total for all Rooms: ' . esc_html($totalResult) . '</strong></p></div>';
+            echo '<a href="' . esc_url_raw(add_query_arg('action', 'go_back')) . '" class="btn btn-primary df-text-decoration">Go Back</a>';
         }
     } else {
         echo display_room_selection_form();
-        
     }
 }
+
 
 
 
@@ -113,18 +125,20 @@ function display_room_selection_form() {
     echo '<option value="" disabled selected>Select Room Type</option>';
     echo '<option value="Single Bed">Single Bed</option>';
     echo '<option value="Double Bed">Double Bed</option>';
-    echo '<option value="Hall">Hall</option>';
+    echo '<option value="HAll">Hall</option>';
     echo '</select>';
 
     echo '<div class="mb-3">'; // Wrapper for input number and label
-      
         echo '<input type="number" placeholder="Enter Number of Rooms" class="form-control" id="room_number_input" name="room_number_input[]" min="1" max="100" required>'; // Added Bootstrap input class
     echo '</div>';
 
-    echo '<button type="button" class="btn btn-primary js-add-another-type">Add Another Type</button>'; // Added Bootstrap button class
+    // Wrap the buttons in a row and justify them
+    echo '<div class="row d-flex justify-content-between">';
+        echo '<button type="button" class="btn btn-primary js-add-another-type">Add Another Type</button>'; // Added Bootstrap button class
+        echo '<input type="submit" value="Submit All" class="btn btn-success mt-3" style="width:auto;">'; // Added Bootstrap submit button class and style
+    echo '</div>';
 
     echo '</div>'; // Close container
-    echo '<input type="submit" value="Submit All" class="btn btn-success mt-3" style="width:auto;">'; // Added Bootstrap submit button class and style
 
     // Get the captured HTML output
     $output = ob_get_clean();
@@ -132,4 +146,5 @@ function display_room_selection_form() {
     // Return the output
     return $output;
 }
+
 

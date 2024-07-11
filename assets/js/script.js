@@ -21,7 +21,7 @@ jQuery(document).ready(function($) {
         newSelect.append(newOption);
         newSelect.append($('<option>', {value: "Single Bed", text: "Single Bed"}));
         newSelect.append($('<option>', {value: "Double Bed", text: "Double Bed"}));
-        newSelect.append($('<option>', {value: "Hall", text: "Hall"}));
+        newSelect.append($('<option>', {value: "HAll", text: "Hall"}));
 
         // Wrap the new elements in a div and prepend them to the form container
         var newRow = $('<div>', {id: 'dynamic-row-' + count, class: 'custom-class'}).append(newSelect, newInput); // Assigning ID and class to the new row
